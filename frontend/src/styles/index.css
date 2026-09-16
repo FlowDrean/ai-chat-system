@@ -1,0 +1,765 @@
+/* ---------------------------------------------------------------------------
+ * 全局样式 / 设计变量 —— 黑白灰「高级感」主题
+ *
+ * 设计原则：
+ *  1. 只用黑白灰：强调色 = 近黑（#111114），交互态用浅灰，不出现蓝紫青等彩色；
+ *  2. 高级感来自「留白 + 发丝线 + 克制的阴影 + 字重层级」，而不是鲜艳色块；
+ *  3. 语义状态（成功/失败/警告）保留低饱和的克制色，只出现在小面积文字与状态点；
+ *  4. 数字与 ID 使用等宽字体 + tabular-nums，对齐更精致。
+ * ------------------------------------------------------------------------- */
+
+:root {
+  /* ---- 主色：近黑 ---- */
+  --brand: #111114;
+  --brand-hover: #2b2b31;
+  --brand-active: #000000;
+  --brand-soft: #f4f4f5; /* 选中 / 悬停底色 */
+  --brand-contrast: #ffffff;
+
+  /* ---- 中性色阶 ---- */
+  --bg-page: #fafafa;
+  --bg-card: #ffffff;
+  --bg-hover: #f4f4f5;
+  --bg-sunken: #f7f7f8;
+
+  --text-primary: #16161a;
+  --text-secondary: #6b7280;
+  --text-tertiary: #8b8b94;
+
+  --border-color: #e6e6e9; /* 发丝线 */
+  --border-strong: #d4d4d8;
+  --border-dark: #18181b;
+
+  /* ---- 语义色（低饱和，克制使用） ---- */
+  --ok: #2f7d5b;
+  --warn: #8a6a1f;
+  --error: #b3261e;
+
+  /* ---- 派生 / 细节色（明暗两套都要用，所以统一走变量）---- */
+  --brand-contrast-soft: rgba(255, 255, 255, 0.72); /* 反白面上的次级文字 */
+  --brand-contrast-faint: rgba(255, 255, 255, 0.16); /* 反白面上的悬停底 */
+  --text-tag: #3f3f46;
+  --quote-text: #52525b;
+  --code-bg: #fcfcfd;
+  --scroll-thumb: #e0e0e3;
+  --scroll-thumb-hover: #c9c9ce;
+  --focus-ring: rgba(17, 17, 20, 0.1);
+
+  /* 提示条底色（antd 推导出来的是脏灰，见文件末尾说明） */
+  --alert-success-bg: #f1f6f3;
+  --alert-success-border: #d7e6dd;
+  --alert-warning-bg: #faf7ee;
+  --alert-warning-border: #e9ddbd;
+  --alert-error-bg: #fcf2f1;
+  --alert-error-border: #eed6d2;
+
+  /* ECharts 图表配色 */
+  --chart-line-1: #111114;
+  --chart-line-2: #71717a;
+  --chart-bar: #d4d4d8;
+  --chart-area: rgba(17, 17, 20, 0.06);
+  --chart-grid: #f4f4f5;
+  --chart-axis: #e6e6e9;
+  --chart-label: #a1a1aa;
+  --chart-pie-1: #111114;
+  --chart-pie-2: #3f3f46;
+  --chart-pie-3: #71717a;
+  --chart-pie-4: #a1a1aa;
+  --chart-pie-5: #c4c4c9;
+  --chart-pie-6: #e4e4e7;
+
+  /* 代码高亮（highlight.js github 主题的等价变量） */
+  --hljs-text: #24292e;
+  --hljs-subst: #24292e;
+  --hljs-comment: #6a737d;
+  --hljs-keyword: #d73a49;
+  --hljs-title: #6f42c1;
+  --hljs-constant: #005cc5;
+  --hljs-string: #032f62;
+  --hljs-variable: #e36209;
+  --hljs-name: #22863a;
+  --hljs-bullet: #735c0f;
+  --hljs-addition-bg: #f0fff4;
+  --hljs-addition-fg: #22863a;
+  --hljs-deletion-bg: #ffeef0;
+  --hljs-deletion-fg: #b31d28;
+
+  --radius-sm: 6px;
+  --radius: 10px;
+  --radius-lg: 14px;
+
+  --shadow-card: 0 1px 2px rgba(16, 16, 20, 0.04);
+  --shadow-pop: 0 1px 2px rgba(16, 16, 20, 0.04), 0 10px 30px rgba(16, 16, 20, 0.07);
+
+  --header-height: 56px;
+  --transition: 180ms cubic-bezier(0.4, 0, 0.2, 1);
+  --font-mono: 'JetBrains Mono', 'Fira Code', Consolas, 'Courier New', monospace;
+}
+/* ---------------------------------------------------------------------------
+ * 暗色主题
+ * 只覆盖「颜色类」变量，布局/圆角/动效完全复用上面的一套。
+ * 关键点：暗色下 --brand 反转为近白，于是主按钮 / 选中项 / Logo 自动变成
+ *        「白底黑字」，和亮色下的「黑底白字」是对称的高级感。
+ * ------------------------------------------------------------------------- */
+html[data-theme='dark'] {
+  color-scheme: dark;
+
+  --brand: #f4f4f5;
+  --brand-hover: #ffffff;
+  --brand-active: #e4e4e7;
+  --brand-soft: #26262b;
+  --brand-contrast: #111114;
+  --brand-contrast-soft: rgba(17, 17, 20, 0.72);
+  --brand-contrast-faint: rgba(17, 17, 20, 0.12);
+
+  --bg-page: #0c0c0e;
+  --bg-card: #141416;
+  --bg-hover: #1e1e22;
+  --bg-sunken: #191a1c;
+
+  --text-primary: #f2f2f4;
+  --text-secondary: #a1a1aa;
+  --text-tertiary: #71717a;
+  --text-tag: #d4d4d8;
+  --quote-text: #a1a1aa;
+
+  --border-color: #26262a;
+  --border-strong: #38383d;
+  --border-dark: #f4f4f5;
+
+  --ok: #57b98a;
+  --warn: #d0a844;
+  --error: #ef6f62;
+
+  --code-bg: #121214;
+  --scroll-thumb: #303035;
+  --scroll-thumb-hover: #45454c;
+  --focus-ring: rgba(244, 244, 245, 0.14);
+
+  --alert-success-bg: #14201a;
+  --alert-success-border: #24402f;
+  --alert-warning-bg: #211d14;
+  --alert-warning-border: #3d3520;
+  --alert-error-bg: #211514;
+  --alert-error-border: #402623;
+
+  --shadow-card: 0 1px 2px rgba(0, 0, 0, 0.5);
+  --shadow-pop: 0 1px 2px rgba(0, 0, 0, 0.5), 0 12px 32px rgba(0, 0, 0, 0.55);
+
+  --chart-line-1: #f4f4f5;
+  --chart-line-2: #a1a1aa;
+  --chart-bar: #3f3f46;
+  --chart-area: rgba(244, 244, 245, 0.08);
+  --chart-grid: #1f1f23;
+  --chart-axis: #2b2b30;
+  --chart-label: #71717a;
+  --chart-pie-1: #f4f4f5;
+  --chart-pie-2: #d4d4d8;
+  --chart-pie-3: #a1a1aa;
+  --chart-pie-4: #71717a;
+  --chart-pie-5: #52525b;
+  --chart-pie-6: #3f3f46;
+
+  --hljs-text: #c9d1d9;
+  --hljs-subst: #c9d1d9;
+  --hljs-comment: #8b949e;
+  --hljs-keyword: #ff7b72;
+  --hljs-title: #d2a8ff;
+  --hljs-constant: #79c0ff;
+  --hljs-string: #a5d6ff;
+  --hljs-variable: #ffa657;
+  --hljs-name: #7ee787;
+  --hljs-bullet: #d2a8ff;
+  --hljs-addition-bg: #0f2a1a;
+  --hljs-addition-fg: #7ee787;
+  --hljs-deletion-bg: #2d1517;
+  --hljs-deletion-fg: #ffa198;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#app {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB',
+    'Microsoft YaHei', sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--text-primary);
+  background: var(--bg-page);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code,
+pre,
+.mono {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+}
+
+/* 数字 / ID 等需要对齐的场景 */
+.num {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.01em;
+}
+
+a {
+  color: var(--text-primary);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: border-color var(--transition);
+}
+
+a:hover {
+  border-bottom-color: var(--border-strong);
+}
+
+/* 滚动条 --------------------------------------------------------------- */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--scroll-thumb);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--scroll-thumb-hover);
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* 通用工具类 ----------------------------------------------------------- */
+.page-container {
+  padding: 20px 24px 32px;
+}
+
+.page-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.page-title {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--text-primary);
+}
+
+.page-subtitle {
+  margin: 4px 0 0;
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+
+.text-secondary {
+  color: var(--text-secondary);
+}
+
+.text-ellipsis {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.fade-in {
+  animation: fade-in 200ms ease both;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* 中性标签：替代 antd 的蓝 / 绿 / 紫等预设彩色 tag ---------------------- */
+.tag-mono {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  height: 20px;
+  padding: 0 7px;
+  font-size: 12px;
+  line-height: 20px;
+  color: var(--text-tag) !important;
+  background: var(--bg-sunken) !important;
+  border: 1px solid var(--border-color) !important;
+  border-radius: 5px !important;
+  margin-inline-end: 0 !important;
+}
+
+.tag-mono.is-strong {
+  color: var(--text-primary) !important;
+  font-weight: 500;
+}
+
+/* 「未启用 / 未配置 / 停用」：比默认更轻，虚线发丝边 */
+.tag-mono.is-muted {
+  color: var(--text-tertiary) !important;
+  background: transparent !important;
+  border-style: dashed !important;
+}
+
+/* 「失败 / 异常」：只把文字染成低饱和语义红，底色仍是灰白 */
+.tag-mono.is-error {
+  color: var(--error) !important;
+}
+
+.tag-mono.is-error .status-dot {
+  background: var(--error) !important;
+}
+
+/* 状态点：颜色只体现在这个小圆点上 */
+.status-dot {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--text-tertiary);
+  flex-shrink: 0;
+}
+
+.status-dot.is-ok {
+  background: var(--ok);
+}
+
+.status-dot.is-warn {
+  background: var(--warn);
+}
+
+.status-dot.is-error {
+  background: var(--error);
+}
+
+/* 处理中：呼吸态，暗示「进行中」而不引入第二种彩色 */
+.status-dot.is-busy {
+  background: var(--text-secondary);
+  animation: status-pulse 1.4s ease-in-out infinite;
+}
+
+@keyframes status-pulse {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.35;
+    transform: scale(0.78);
+  }
+}
+
+/* 卡片悬停：黑描边 + 轻微阴影，替代彩色描边 */
+.card-hover {
+  transition: border-color var(--transition), box-shadow var(--transition), transform var(--transition);
+}
+
+.card-hover:hover {
+  border-color: var(--border-dark);
+  box-shadow: var(--shadow-pop);
+}
+
+/* Markdown 渲染 --------------------------------------------------------- */
+.markdown-body {
+  font-size: 14px;
+  line-height: 1.75;
+  word-break: break-word;
+  color: var(--text-primary);
+}
+
+.markdown-body > *:first-child {
+  margin-top: 0;
+}
+.markdown-body > *:last-child {
+  margin-bottom: 0;
+}
+
+.markdown-body h1,
+.markdown-body h2,
+.markdown-body h3,
+.markdown-body h4 {
+  margin: 18px 0 10px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  line-height: 1.4;
+}
+.markdown-body h1 {
+  font-size: 20px;
+}
+.markdown-body h2 {
+  font-size: 17px;
+}
+.markdown-body h3 {
+  font-size: 15px;
+}
+.markdown-body p {
+  margin: 8px 0;
+}
+.markdown-body ul,
+.markdown-body ol {
+  margin: 8px 0;
+  padding-left: 22px;
+}
+.markdown-body li {
+  margin: 4px 0;
+}
+.markdown-body blockquote {
+  margin: 10px 0;
+  padding: 6px 14px;
+  border-left: 2px solid var(--text-primary);
+  background: var(--bg-sunken);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  color: var(--quote-text);
+}
+.markdown-body table {
+  width: 100%;
+  margin: 12px 0;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+.markdown-body th,
+.markdown-body td {
+  padding: 8px 12px;
+  border: 1px solid var(--border-color);
+  text-align: left;
+}
+.markdown-body th {
+  background: var(--bg-sunken);
+  font-weight: 600;
+}
+.markdown-body :not(pre) > code {
+  padding: 2px 6px;
+  font-size: 13px;
+  background: var(--bg-sunken);
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  color: var(--text-primary);
+}
+.markdown-body hr {
+  border: none;
+  border-top: 1px solid var(--border-color);
+  margin: 16px 0;
+}
+
+/* 代码块 --------------------------------------------------------------- */
+.code-block {
+  margin: 12px 0;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius);
+  overflow: hidden;
+  background: var(--code-bg);
+}
+.code-block__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6px 12px;
+  background: var(--bg-sunken);
+  border-bottom: 1px solid var(--border-color);
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+.code-block__copy {
+  border: none;
+  background: transparent;
+  color: var(--text-secondary);
+  cursor: pointer;
+  font-size: 12px;
+  padding: 2px 6px;
+  border-radius: 4px;
+  transition: var(--transition);
+}
+.code-block__copy:hover {
+  background: var(--bg-hover);
+  color: var(--text-primary);
+}
+.code-block pre {
+  margin: 0;
+  padding: 12px 14px;
+  overflow-x: auto;
+  background: var(--code-bg);
+}
+.code-block code {
+  font-size: 13px;
+  line-height: 1.65;
+  background: transparent;
+  padding: 0;
+}
+
+/* Ant Design Vue 细节覆写 -------------------------------------------------- */
+.ant-layout {
+  background: var(--bg-page);
+}
+
+/* Segmented：选中态做黑底白字药丸。
+   4.2.6 里选中底色走 bgColorSelected / colorBgElevated，且「选中文字色」与「hover 文字色」
+   共用 labelColorHover，token 没法拆开，所以这里统一用 CSS 收口。 */
+.ant-segmented-item-selected,
+.ant-segmented-item-selected:hover {
+  background-color: var(--brand) !important;
+}
+
+.ant-segmented-item-selected .ant-segmented-item-label {
+  color: var(--brand-contrast) !important;
+}
+
+.ant-segmented-thumb {
+  background-color: var(--brand) !important;
+}
+
+
+/* 暗色下「实心高亮」组件的补充收口。
+   Button / Switch / Steps / FloatButton 走 App.vue 的组件 token；
+   Checkbox 的对勾在 antd 里是写死的白边，只能在这里改。 */
+/* 开关的圆点在 antd 里写死用 colorWhite，暗色下选中轨道是浅色  圆点必须翻成深色 */
+html[data-theme='dark'] .ant-switch-checked .ant-switch-handle::before {
+  background-color: var(--brand-contrast) !important;
+}
+
+html[data-theme='dark'] .ant-checkbox-checked .ant-checkbox-inner::after {
+  border-color: var(--brand-contrast) !important;
+}
+
+html[data-theme='dark'] .ant-radio-checked .ant-radio-inner::after {
+  background-color: var(--brand-contrast) !important;
+}
+
+/* 表格：antd 4.2.6 的 Table 内部会把 tableHeaderBg / tableRowHoverBg
+   重新算成 colorFillAlterSolid，组件 token 覆盖不了，所以这里用 CSS 收口。 */
+.ant-table-thead > tr > th,
+.ant-table-thead > tr > td {
+  background: var(--bg-sunken) !important;
+  color: var(--text-secondary) !important;
+}
+
+.ant-table-wrapper .ant-table-tbody > tr.ant-table-row:hover > td,
+.ant-table-wrapper .ant-table-tbody > tr > td.ant-table-cell-row-hover {
+  background: var(--bg-hover) !important;
+}
+
+.ant-table-wrapper .ant-table-tbody > tr.ant-table-row-selected > td {
+  background: var(--brand-soft) !important;
+}
+
+/* Alert：antd 的底色是从 colorInfo / colorSuccess / colorWarning 推导出来的。
+   我们的语义色刻意压低饱和度，推导结果就是「灰扑扑的中间色」
+   info 甚至算出 #4f5054 深灰配近黑字，对比度极差。
+   这里统一改成「极浅底 + 发丝边」，语义色只落在图标和标题上。 */
+.ant-alert {
+  border-radius: var(--radius-sm) !important;
+}
+
+.ant-alert-info {
+  background: var(--bg-sunken) !important;
+  border-color: var(--border-color) !important;
+}
+.ant-alert-info .ant-alert-icon {
+  color: var(--text-tertiary) !important;
+}
+.ant-alert-info .ant-alert-message {
+  color: var(--text-primary) !important;
+}
+
+.ant-alert-success {
+  background: var(--alert-success-bg) !important;
+  border-color: var(--alert-success-border) !important;
+}
+.ant-alert-warning {
+  background: var(--alert-warning-bg) !important;
+  border-color: var(--alert-warning-border) !important;
+}
+.ant-alert-error {
+  background: var(--alert-error-bg) !important;
+  border-color: var(--alert-error-border) !important;
+}
+
+.ant-alert-success .ant-alert-icon,
+.ant-alert-success .ant-alert-message {
+  color: var(--ok) !important;
+}
+.ant-alert-warning .ant-alert-icon,
+.ant-alert-warning .ant-alert-message {
+  color: var(--warn) !important;
+}
+.ant-alert-error .ant-alert-icon,
+.ant-alert-error .ant-alert-message {
+  color: var(--error) !important;
+}
+
+.ant-alert-description {
+  color: var(--text-secondary) !important;
+}
+
+/* Steps：完成态图标。antd 用 colorPrimary 推导出的「完成」底色，
+   在近黑主色下会变成 #4f5054 深灰 + 深色对勾（几乎看不清），这里换成浅灰盘 + 近黑对勾。 */
+.ant-steps-item-finish .ant-steps-item-icon {
+  background: var(--brand-soft) !important;
+  border-color: var(--brand-soft) !important;
+}
+
+.ant-steps-item-finish .ant-steps-item-icon .ant-steps-icon {
+  color: var(--text-primary) !important;
+}
+
+/* banner 形态（聊天页顶部通知）不需要圆角和描边 */
+.ant-alert-banner {
+  border-radius: 0 !important;
+  border-width: 0 !important;
+}
+.ant-card {
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-card);
+}
+.ant-table-wrapper .ant-table {
+  border-radius: var(--radius);
+}
+.ant-table-thead > tr > th {
+  font-weight: 600 !important;
+}
+.ant-modal-content,
+.ant-drawer-content {
+  border-radius: var(--radius-lg);
+}
+.ant-btn {
+  box-shadow: none !important;
+}
+.ant-btn-primary {
+  font-weight: 500;
+}
+.ant-empty-description {
+  color: var(--text-secondary);
+}
+/* 焦点环：黑色半透明，避免默认的蓝色光晕 */
+.ant-btn:focus-visible,
+.ant-input:focus,
+.ant-input-focused,
+.ant-input-affix-wrapper-focused,
+.ant-select-focused .ant-select-selector,
+.ant-picker-focused {
+  box-shadow: 0 0 0 3px var(--focus-ring) !important;
+}
+.ant-tag {
+  font-variant-numeric: tabular-nums;
+}
+
+/* 响应式 --------------------------------------------------------------- */
+@media (max-width: 768px) {
+  .page-container {
+    padding: 14px 14px 24px;
+  }
+  .page-title {
+    font-size: 18px;
+  }
+  .markdown-body {
+    font-size: 14px;
+  }
+}
+
+
+/* ---------------------------------------------------------------------------
+ * 代码高亮：highlight.js 的 github.css 只有亮色。
+ * 这里用变量把它重写一遍（亮色值与 github.css 等价），暗色下自然切换。
+ * ------------------------------------------------------------------------- */
+html[data-theme] .hljs {
+  color: var(--hljs-text);
+  background: transparent;
+}
+html[data-theme] .hljs-doctag,
+html[data-theme] .hljs-keyword,
+html[data-theme] .hljs-meta .hljs-keyword,
+html[data-theme] .hljs-template-tag,
+html[data-theme] .hljs-template-variable,
+html[data-theme] .hljs-type,
+html[data-theme] .hljs-variable.language_ {
+  color: var(--hljs-keyword);
+}
+html[data-theme] .hljs-title,
+html[data-theme] .hljs-title.class_,
+html[data-theme] .hljs-title.class_.inherited__,
+html[data-theme] .hljs-title.function_ {
+  color: var(--hljs-title);
+}
+html[data-theme] .hljs-attr,
+html[data-theme] .hljs-attribute,
+html[data-theme] .hljs-literal,
+html[data-theme] .hljs-meta,
+html[data-theme] .hljs-number,
+html[data-theme] .hljs-operator,
+html[data-theme] .hljs-variable,
+html[data-theme] .hljs-selector-attr,
+html[data-theme] .hljs-selector-class,
+html[data-theme] .hljs-selector-id {
+  color: var(--hljs-constant);
+}
+html[data-theme] .hljs-regexp,
+html[data-theme] .hljs-string,
+html[data-theme] .hljs-meta .hljs-string {
+  color: var(--hljs-string);
+}
+html[data-theme] .hljs-built_in,
+html[data-theme] .hljs-symbol {
+  color: var(--hljs-variable);
+}
+html[data-theme] .hljs-comment,
+html[data-theme] .hljs-code,
+html[data-theme] .hljs-formula {
+  color: var(--hljs-comment);
+}
+html[data-theme] .hljs-name,
+html[data-theme] .hljs-quote,
+html[data-theme] .hljs-selector-tag,
+html[data-theme] .hljs-selector-pseudo {
+  color: var(--hljs-name);
+}
+html[data-theme] .hljs-subst {
+  color: var(--hljs-subst);
+}
+html[data-theme] .hljs-section {
+  color: var(--hljs-constant);
+  font-weight: 600;
+}
+html[data-theme] .hljs-bullet {
+  color: var(--hljs-bullet);
+}
+html[data-theme] .hljs-emphasis {
+  color: var(--hljs-subst);
+  font-style: italic;
+}
+html[data-theme] .hljs-strong {
+  color: var(--hljs-subst);
+  font-weight: 600;
+}
+html[data-theme] .hljs-addition {
+  color: var(--hljs-addition-fg);
+  background-color: var(--hljs-addition-bg);
+}
+html[data-theme] .hljs-deletion {
+  color: var(--hljs-deletion-fg);
+  background-color: var(--hljs-deletion-bg);
+}

@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="theme-color" content="#fafafa" />
+    <meta name="description" content="AI 问答聊天助手 —— 多模型配置 · RAG 知识库 · LangGraph 工作流" />
+    <title>AI Assistant · 智能问答助手</title>
+    <!-- 主题：在样式生效前先把 data-theme 写上去，避免首屏「先亮后暗」闪一下 -->
+    <script>
+      ;(function () {
+        try {
+          var mode = localStorage.getItem('ai_chat_theme') || 'light'
+          var dark =
+            mode === 'dark' ||
+            (mode === 'system' &&
+              window.matchMedia &&
+              window.matchMedia('(prefers-color-scheme: dark)').matches)
+          var resolved = dark ? 'dark' : 'light'
+          var root = document.documentElement
+          root.dataset.theme = resolved
+          root.style.colorScheme = resolved
+          var meta = document.querySelector('meta[name="theme-color"]')
+          if (meta) meta.setAttribute('content', dark ? '#0c0c0e' : '#fafafa')
+        } catch (error) {
+          /* localStorage 不可用时按亮色处理 */
+        }
+      })()
+    </script>
+  </head>
+  <body>
+    <div id="app"></div>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
